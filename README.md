@@ -2,12 +2,12 @@
 
 ## Overview
 
-This provides an basic introduction to shell programming. If you 
-use Linux much at all, you'll at least occasionally find yourself needing 
+This provides an basic introduction to shell programming. If you
+use Linux much at all, you'll at least occasionally find yourself needing
 to use the shell/command line (i.e., what you get when you open the terminal program). Having experience with the shell is extremely useful, as you often
 end up needing to, e.g., `ssh` into a remote or cloud system where you won't
 have access to the nice GUI tools. This lab provides an introduction to a
-variety of important shell tools and how programming/scripting is done 
+variety of important shell tools and how programming/scripting is done
 using shell commands.
 
 :warning: Remember to complete the [Command line introduction pre-lab](https://github.com/UMM-CSci-Systems/Command-line-introduction-pre-lab) reading and preparation before this lab begins.
@@ -36,17 +36,17 @@ You will need to write several different scripts for this lab:
 -   A script that separates executable files from non-executable ones,
     processing the two groups differently
 
-None of these will be very long, but most or all of them will require 
-you to learn new shell commands or tools. We’ll give you hints and 
-pointers as to what commands/tools to be using, but you’ll need to 
-do some digging in the `man` pages and/or searching on-line to find 
-the details. Don’t bang your head against any piece of this for too 
-long. If you’ve spent more than 10 minutes on a single part or command, 
-you probably need to take a break and ask someone (like your instructor) 
-for some help. On the other side of the coin, however, don’t immediately 
-give up and ask at every step. Learning how to find and use this sort 
-of information is an enormously valuable skill, and will be useful 
-far longer and more often than the details that you’re actually looking 
+None of these will be very long, but most or all of them will require
+you to learn new shell commands or tools. We’ll give you hints and
+pointers as to what commands/tools to be using, but you’ll need to
+do some digging in the `man` pages and/or searching on-line to find
+the details. Don’t bang your head against any piece of this for too
+long. If you’ve spent more than 10 minutes on a single part or command,
+you probably need to take a break and ask someone (like your instructor)
+for some help. On the other side of the coin, however, don’t immediately
+give up and ask at every step. Learning how to find and use this sort
+of information is an enormously valuable skill, and will be useful
+far longer and more often than the details that you’re actually looking
 up. So make a bit of an effort, but know when to stop.
 
 ## Setting up
@@ -62,12 +62,12 @@ the repository, but that person then needs to add everyone else as collaborators
 
 You’ll “turn in” your work simply by having it committed to the
 repository. We’ll check it out from there to run and grade it.
-We'll obviously need to be able to find your repository to grade it, 
-so make sure to submit the URL of your forked repository 
+We'll obviously need to be able to find your repository to grade it,
+so make sure to submit the URL of your forked repository
 using whatever technique is indicated by your instructor.
 
 Be certain to **commit often**, and **trade places at the keyboard
-often**. At a minimum you should probably trade every time you solve 
+often**. At a minimum you should probably trade every time you solve
 a specific problem that comes out of the test script. You should probably
 consider committing that often as well.
 
@@ -95,9 +95,19 @@ don't understand what the tests are "telling you", definitely ask; they are
 there to help you, and if they aren't communicating effectively then they're
 not doing their job.
 
-You should get all the tests to pass before you "turn in" your work. Having 
+You should get all the tests to pass before you "turn in" your work. Having
 the tests pass doesn't guarantee that your scripts are 100% correct, but it's a
 strong initial indicator.
+
+One thing the tests _can't_ gracefully test is the proper use temporary scratch
+directories when appropriate. If your script is supposed to create a temporary
+directory, do some work there, and then delete it, then there's no easy way
+to confirm that you actually did that "correctly". We've demonstrated how to
+properly create, use, and delete temporary scratch directories in
+the [`git-bats-demo` videos](https://www.youtube.com/playlist?list=PLSAR9qWL-3y7Z--_jF7KUMUwjCwPjjJCY);
+make sure you ask questions about that if you're unsure, though, as the tests
+aren't necessarily going to alert you if you have a problem with this part of
+the process.
 
 ## First script: Compiling a C program
 
@@ -223,7 +233,7 @@ the test isn’t being passed go back and re-read the directions
 
 You'll "turn this in" by committing your work to your fork of this starter
 project. You should also submit the URL of your repository in whatever way
-indicated by your instructor. Remember to make sure you've completed each 
+indicated by your instructor. Remember to make sure you've completed each
 of the three assigned tasks:
 
 - [ ] First script: Compiling a C program
