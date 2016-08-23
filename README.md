@@ -29,7 +29,7 @@ using shell commands.
 
 You will need to write several different scripts for this lab:
 
--   A script to copy and open up a `tar` archive, and then compile and run
+-   A script to extract the contents of a `tar` archive, and then compile and run
     the C program it contains
 -   A script to delete a large number of unwanted files, leaving the
     other files in that directory alone
@@ -111,28 +111,56 @@ the process.
 
 ## First script: Compiling a C program
 
-Your goal here is to get the test in
-`~dolanp/pub/CSci3403/Lab0/copy_and_compile_test.sh` to pass.
+The tests and data for this problem are in the `compiling` directory of this project, and the discussion of this problem will all assume that you've `cd`ed into that directory. Your goal is to get the tests in `tests.bats` (in the `compiling` directory) to pass.
 
-For this you should write a bash script called <span
-class="highlight">`copy_and_compile.sh`</span> that:
+For this you should write a bash script called `extract_and_compile.sh` that:
 
 -   Takes two arguments.
--   The first should be the name of a directory that you can safely
-    assume doesn’t currently exist.
--   The second should be a number that will be used as an argument to
-    the C program later.
--   Creates that directory
--   Copies the tarball `~dolan118/pub/CSci3403/Lab0/NthPrime.tgz` to
-    your new directory
--   Extracts the files from that tarball (This is a compressed tar file,
-    so you’ll need to uncompress and then extract. The `tar` command can
-    do both things in one step, or you can use `gunzip` to decompress
-    and then tar to extract. I’d definitely visit the man pages
-    for tar.)
--   Compiles the C program that gets extracted and call the resulting
-    executable `NthPrime`. The executable should be place in the same
-    directory as the C files, i.e., the NthPrime directory.
+    -   The first is a number that will be used as an argument when you call the C program that you'll be compiling in a bit.
+    -   The second is the name of a directory that you should do extract the files into and compile the program.
+-   Extracts the contents of the tar archive `NthPrime.tgz` into the
+    specified directory. This is a compressed tar file (indicated by
+    the `gz`, for `gzip`, in the file extension),
+    so you’ll need to uncompress and then extract; the `tar` command can
+    do both things in one step. You might find the `man` pages
+    for `tar`.
+-   Compiles the C program that gets extracted, generating an executable
+    called `NthPrime` (still in the specified temporary directory).
+-   Call the resulting executable (`NthPrime`). `NthPrime` requires a single
+    number as a command line argument; you should pass it the first of the two
+    command line arguments your script received.
+
+As an example, imagine your script is called using:
+
+```bash
+./extract_and_compile.sh 17 /tmp/tmp.7dMpfowoGF
+```
+
+Then it should
+
+* Extract the contents of `NthPrime.tgz` into
+`/tmp/tmp.7dMpfowoGF`.
+* Compile the files in `/tmp/tmp.7dMpfowoGF` to generate the binary
+`/tmp/tmp.7dMpfowoGF/NthPrime`.
+* Run that binary with the argument `17` (the first argument in this example); this should generate the output `Prime 17 = 59.`
+
+Remember that you can call your script "by hand" as a debugging aid so you can
+see exactly what it's doing and where. So you could do something like
+
+```bash
+mkdir /tmp/frogs
+./extract_and_compile.sh 8 /tmp/frogs
+```
+
+and then go look in `/tmp/frogs` and see what your script did there. It's
+important that the scratch directory exist before you call your script (hence
+the `mkdir` call first). You would want to empty the contents of the scratch
+directory before calling your script a second time, or you won't be able to
+tell what was left over from the first call. You probably want to delete
+`/tmp/frogs` (or whatever you called it) when you're done just as a politness
+so you don't clutter up `/tmp/` unnecessarily.
+
+### Some notes on compiling a C program
 
 The C compiler in the lab is `gcc`.
 
@@ -147,21 +175,16 @@ Most of you have never compiled a C program before, so this might be a
 good time to ask me to say a little about how that works. Alternately,
 you might see what you can figure out with `man gcc`.
 
-\*\* Run the program with your second argument as its sole command line
-argument, putting the results in the file `results.txt` in the
-\*NthPrime\*\* directory you created. This will require output
-redirection as described in the tutorial in the pre-reading.
+:exclamation: When you run the program you compiled (`NthPrime`) give it
+the second command line argument _your_ script received as its sole command
+line argument.
 
--   Run the test file in the same directory as your script (which will
-    require that you copy the test file to whatever directory you’re
-    building your script in).
+### :alert: Some non-obvious assumptions that the test script makes:
 
-**ALERT!** Some non-obvious assumptions that my test script makes:
-
--   The .tgz version of the tarball will be in the specified directory
-    when you’re done. This means that if you first unzip and then, in a
+-   The `.tgz` version of the tar archive will be in the specified directory
+    when you’re done. This means that if you first `gunzip` and then, in a
     separate step, untar, the test is likely to fail since you’ll end up
-    with a .tar file instead of a .tgz file.
+    with a `.tar` file instead of a `.tgz` file.
 
 ## Second script: Clean up a big directory
 
