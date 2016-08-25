@@ -69,7 +69,7 @@ teardown() {
 
 @test "The new archive has (some) of the right files in it" {
   ./big_clean.sh $little.tgz $BATS_TMPDIR
-  run bash -c "tar -ztf cleaned_$little.tgz | grep '/f'"
+  run bash -c "tar -ztf cleaned_$little.tgz | grep '/f' | sort"
   [ "${lines[0]}" == "little_dir/file_1" ]
   [ "${lines[1]}" == "little_dir/file_10" ]
   [ "${lines[8]}" == "little_dir/file_19" ]
