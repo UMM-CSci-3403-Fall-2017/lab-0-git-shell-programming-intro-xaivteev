@@ -119,9 +119,12 @@ For this you should write a bash script called `extract_and_compile.sh` that:
     the `gz`, for `gzip`, in the file extension),
     so you’ll need to uncompress and then extract; the `tar` command can
     do both things in one step. You might find the `man` pages
-    for `tar`.
+    for `tar`. This should create a directory `NthPrime` in your scratch
+    directory; that `NthPrime` directory should contain several `*.c` and
+    `*.h` files that can be compiled to create an executable.
+-   Goes into the `NthPrime` directory that the `tar` extraction created.
 -   Compiles the C program that gets extracted, generating an executable
-    called `NthPrime` (still in the specified temporary directory).
+    called `NthPrime` (still in the `NthPrime` directory in your specified temporary directory).
 -   Call the resulting executable (`NthPrime`). `NthPrime` requires a single
     number as a command line argument; you should pass it the first of the two
     command line arguments your script received.
@@ -135,9 +138,9 @@ As an example, imagine your script is called using:
 Then it should
 
 * Extract the contents of `NthPrime.tgz` into
-`/tmp/tmp.7dMpfowoGF`.
-* Compile the files in `/tmp/tmp.7dMpfowoGF` to generate the binary
-`/tmp/tmp.7dMpfowoGF/NthPrime`.
+`/tmp/tmp.7dMpfowoGF` creating a directory `/tmp/tmp.7dMpfowoGF/NthPrime`
+* Compile the files in `/tmp/tmp.7dMpfowoGF/NthPrime` to generate the binary
+`/tmp/tmp.7dMpfowoGF/NthPrime/NthPrime`.
 * Run that binary with the argument `17` (the first argument in this example); this should generate the output `Prime 17 = 59.`
 
 Remember that you can call your script "by hand" as a debugging aid so you can
