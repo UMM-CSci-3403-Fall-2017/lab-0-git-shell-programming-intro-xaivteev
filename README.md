@@ -191,30 +191,21 @@ line argument.
 Your goal here is to get the test in
 `~dolanp/pub/CSci3403/Lab0/big_clean_test.sh` to pass.
 
-For this you should write a bash script named <span
-class="highlight">big\_clean.sh</span> that:
+For this you should write a bash script named `big_clean.sh` that:
 
--   Takes one argument (This should be the name of a directory that you
-    can safely assume doesn’t currently exist.)
--   Creates that directory
--   Copies the directory `~dolanp/pub/CSci3403/Lab0/big_dir` to your
-    new directory. (This will require copying a directory with many
-    files, so you’ll need the recursive version of `cp`.) This will also
-    take a few seconds - there are 1001 files in the directory.
--   Removes all the files containing the line “DELETE ME!”, while
+-   Takes two arguments:
+    - The first will be the name of a compressed `tar` archive (`.tgz` file) that contains the files you'll process.   
+    - The second will be the name of a scratch directory you can do your work in.
+-   Extracts the contents of the `tar` archive into the specified scratch directory. This will take a few seconds for `big_dir.tgz` since that has over 1000 files in it.
+-   Removes all the files from the scratch directory (i.e., the files that came from your `tar` archive) containing the line “DELETE ME!”, while
     leaving all the others alone. (There are quite a few ways to
     do this. The `grep` family of tools is probably the easiest way to
     see if a file has the “DELETE ME!” line. You could then use a shell
     loop to loop through all the files and remove the ones that have the
     line, or you can use backticks and `rm`.)
--   Counts the number of remaining files and puts the result in
-    `remaining_file_count.txt`. That file should just contain that
-    number and nothing else. The command `wc` might be useful here, but
-    you’ll need to look at flags and figure out how to connect `wc` to
-    `ls`. Output redirection will be useful again.
--   Run the test file in the same directory as your script (which will
-    require that you copy the test file to whatever directory you’re
-    building your script in).
+-   Create a _new_ compressed `tar` archive that contains the files in the scratch directory _after_ you've removed the "DELETE ME!" files. The files in the archive should _not_ have the path to the scratch directory in their filenames.
+    - This is probably the trickiest part of the lab because you have to be in the scratch directory when you create the `tar` archive or you'll end up with the path to the scratch directory in all the file names.
+    - It's easy enough to `cd $SCRATCH` or `pushd $SCRATCH` to get to the scratch directory to run the `tar -zcf...` command, but then how do you know where you came from, so you can put the new tar file in the right place? The `pwd` command returns your current working directory, so something like `here=\`pwd\`` will capture your current directory in a shell variable called `here` so you can use `$here` later to refer to where you had been.
 
 ## Third script: Playing with `find` and `sed`
 
