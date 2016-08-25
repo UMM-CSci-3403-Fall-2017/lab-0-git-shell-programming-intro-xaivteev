@@ -8,7 +8,7 @@ num_big_remaining_files=792
 
 # Create a temporary scratch directory for the shell script to work in.
 setup() {
-  BATS_TMPDIR=`gmktemp --directory`
+  BATS_TMPDIR=`mktemp --directory`
 }
 
 # Remove the temporary scratch directory to clean up after ourselves.
