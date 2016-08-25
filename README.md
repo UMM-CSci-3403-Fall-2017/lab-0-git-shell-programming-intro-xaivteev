@@ -19,8 +19,6 @@ using shell commands.
     program](#first-script-compiling-a-c-program)
     - [ ]  [Second script: Clean up a big
     directory](#second-script-clean-up-a-big-directory)
-    - [ ]  [Third script: Playing with find and
-    sed](#third-script-playing-with-find-and-sed)
 -   [Final Thoughts](#final-thoughts)
 -   [What to turn in](#what-to-turn-in)
 
@@ -75,18 +73,16 @@ consider committing that often as well.
 
 # Exercises
 
-There are three exercises that you should complete for this lab:
+You should complete the following exercises for this lab:
 
 - [ ] [First script: Compiling a C program](#first-script-compiling-a-c-program)
 - [ ] [Second script: Clean up a big directory](#second-script-clean-up-a-big-directory)
-- [ ] [Third script: Playing with `find` and `sed`](#third-script-playing-with-find-and-sed)
 
 The tests and any relevant files for each part are in the appropriate
 sub-directory in this repository:
 
 * `compiling`
 * `cleaning`
-* `find_and_sed`
 
 In each case there are tests written using the [`bats` testing tool for `bash` scripts](https://github.com/sstephenson/bats) in a file called `tests.bats`.
 You should be able to run the tests with `bats tests.bats`, and use the testing
@@ -188,10 +184,7 @@ line argument.
 
 ## Second script: Clean up a big directory
 
-Your goal here is to get the test in
-`~dolanp/pub/CSci3403/Lab0/big_clean_test.sh` to pass.
-
-For this you should write a bash script named `big_clean.sh` that:
+Your goal here is to get the tests in `tests.bats` to pass. For this you should write a bash script named `big_clean.sh` that:
 
 -   Takes two arguments:
     - The first will be the name of a compressed `tar` archive (`.tgz` file) that contains the files you'll process.   
@@ -206,31 +199,6 @@ For this you should write a bash script named `big_clean.sh` that:
 -   Create a _new_ compressed `tar` archive that contains the files in the scratch directory _after_ you've removed the "DELETE ME!" files. The files in the archive should _not_ have the path to the scratch directory in their filenames.
     - This is probably the trickiest part of the lab because you have to be in the scratch directory when you create the `tar` archive or you'll end up with the path to the scratch directory in all the file names.
     - It's easy enough to `cd $SCRATCH` or `pushd $SCRATCH` to get to the scratch directory to run the `tar -zcf...` command, but then how do you know where you came from, so you can put the new tar file in the right place? The `pwd` command returns your current working directory, so something like `here=\`pwd\`` will capture your current directory in a shell variable called `here` so you can use `$here` later to refer to where you had been.
-
-## Third script: Playing with `find` and `sed`
-
-The command `find` is an extremely powerful and cool tool which I use
-all the time in teaching, lab admin, and research. There are also a
-number of very useful scriptable editing tools that are good to know
-about. In this exercise we’ll use `sed` (which stands for “stream
-editor”), which is one of a number of cool scriptable editing tools that
-are good to know about; `awk` is another one that’s particularly worth
-looking up.
-
-There’s a test script in
-`~dolanp/pub/CSci3403/Lab0/Fix_headers/fix_header_test.sh` that you want
-to make pass. You’ll want to make a script called <span
-class="highlight">fix\_headers.sh</span> that does the following:
-
--   Copy the directory `~dolanp/pub/CSci3403/Lab0/Fix_headers/files` to
-    the working directory (specified as the first command line
-    argument again)
--   For every executable file in that directory, remove the space from
-    the header line, i.e., change `#! /bin/bash` to `#!/bin/bash`. (It
-    turns out that having a space there is in fact an error and causes
-    the specified program to be ignored, so we want to remove those.)
--   For every file that’s not executable, replace the string “Running a
-    script” with “Not running a script”.
 
 # Final Thoughts
 
@@ -248,8 +216,7 @@ the test isn’t being passed go back and re-read the directions
 You'll "turn this in" by committing your work to your fork of this starter
 project. You should also submit the URL of your repository in whatever way
 indicated by your instructor. Remember to make sure you've completed each
-of the three assigned tasks:
+of the assigned tasks:
 
 - [ ] First script: Compiling a C program
 - [ ] Second script: Clean up a big directory
-- [ ] Third script: Playing with `find` and `sed`
