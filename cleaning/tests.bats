@@ -78,6 +78,5 @@ teardown() {
 @test "big_clean.sh returns the right number of files on the big archive" {
   run ./big_clean.sh $big.tgz $BATS_TMPDIR
   run bash -c "tar -ztf cleaned_$big.tgz | grep '/f' | wc -l"
-  echo $output > /tmp/output
   [ "$output" -eq $num_big_remaining_files ]
 }
