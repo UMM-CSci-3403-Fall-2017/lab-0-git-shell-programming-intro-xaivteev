@@ -8,7 +8,7 @@ num_big_remaining_files=792
 
 # Create a temporary scratch directory for the shell script to work in.
 setup() {
-  BATS_TMPDIR=`gmktemp --directory`
+  BATS_TMPDIR=`mktemp --directory`
 }
 
 # Remove the temporary scratch directory to clean up after ourselves.
@@ -69,7 +69,7 @@ teardown() {
 
 @test "The new archive has (some) of the right files in it" {
   ./big_clean.sh $little.tgz $BATS_TMPDIR
-  run bash -c "tar -ztf cleaned_$little.tgz | grep '/f'"
+  run bash -c "tar -ztf cleaned_$little.tgz | grep '/f' | sort"
   [ "${lines[0]}" == "little_dir/file_1" ]
   [ "${lines[1]}" == "little_dir/file_10" ]
   [ "${lines[8]}" == "little_dir/file_19" ]
@@ -78,6 +78,5 @@ teardown() {
 @test "big_clean.sh returns the right number of files on the big archive" {
   run ./big_clean.sh $big.tgz $BATS_TMPDIR
   run bash -c "tar -ztf cleaned_$big.tgz | grep '/f' | wc -l"
-  echo $output > /tmp/output
   [ "$output" -eq $num_big_remaining_files ]
 }
