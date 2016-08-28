@@ -58,7 +58,7 @@ teardown() {
   [ -f "$little.tgz" ]
 }
 
-@test "big_clean.sh creates new 'cleaned_big_dir.tgz' archive" {
+@test "big_clean.sh creates new 'cleaned_little_dir.tgz' archive" {
   run ./big_clean.sh $little.tgz $BATS_TMPDIR
   [ -f "cleaned_$little.tgz" ]
 }
