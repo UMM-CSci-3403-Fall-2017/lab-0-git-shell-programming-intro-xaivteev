@@ -191,6 +191,18 @@ when you’re done. This means that if you first `gunzip` and then, in a
 separate step, untar, the test is likely to fail since you’ll end up
 with a `.tar` file instead of a `.tgz` file. _So you should use the appropriate `tar` flags that uncompress and untar in a single step._
 
+The tests also assume that your script generates _no_
+"extraneous" output. If, for example, you use the `-v`
+flag with `tar`, you'll generate a bunch of output that
+will cause some of the tests to fail. You may want to have
+"extra" output as a debugging tool while you're working
+on the script, but you'll need to remove all that to get
+the tests to pass. This is consistent with standard
+practice in Unix shell programming, where most commands
+provide little to no output if things went fine, making it
+much easier for you to chain them together into more
+complex behaviors.
+
 ## Second script: Clean up a big directory
 
 Your goal here is to get the tests in `tests.bats` to pass. For this you should write a bash script named `big_clean.sh` that:
