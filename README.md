@@ -95,16 +95,6 @@ You should get all the tests to pass before you "turn in" your work. Having
 the tests pass doesn't guarantee that your scripts are 100% correct, but it's a
 strong initial indicator.
 
-One thing the tests _can't_ gracefully test is the proper use temporary scratch
-directories when appropriate. If your script is supposed to create a temporary
-directory, do some work there, and then delete it, then there's no easy way
-to confirm that you actually did that "correctly". We've demonstrated how to
-properly create, use, and delete temporary scratch directories in
-the [`git-bats-demo` videos](https://www.youtube.com/playlist?list=PLSAR9qWL-3y7Z--_jF7KUMUwjCwPjjJCY);
-make sure you ask questions about that if you're unsure, though, as the tests
-aren't necessarily going to alert you if you have a problem with this part of
-the process.
-
 ## First script: Compiling a C program
 
 The tests and data for this problem are in the `compiling` directory of this project, and the discussion of this problem will all assume that you've `cd`ed into that directory. Your goal is to get the tests in `tests.bats` (in the `compiling` directory) to pass.
