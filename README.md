@@ -95,16 +95,6 @@ You should get all the tests to pass before you "turn in" your work. Having
 the tests pass doesn't guarantee that your scripts are 100% correct, but it's a
 strong initial indicator.
 
-One thing the tests _can't_ gracefully test is the proper use temporary scratch
-directories when appropriate. If your script is supposed to create a temporary
-directory, do some work there, and then delete it, then there's no easy way
-to confirm that you actually did that "correctly". We've demonstrated how to
-properly create, use, and delete temporary scratch directories in
-the [`git-bats-demo` videos](https://www.youtube.com/playlist?list=PLSAR9qWL-3y7Z--_jF7KUMUwjCwPjjJCY);
-make sure you ask questions about that if you're unsure, though, as the tests
-aren't necessarily going to alert you if you have a problem with this part of
-the process.
-
 ## First script: Compiling a C program
 
 The tests and data for this problem are in the `compiling` directory of this project, and the discussion of this problem will all assume that you've `cd`ed into that directory. Your goal is to get the tests in `tests.bats` (in the `compiling` directory) to pass.
@@ -143,6 +133,21 @@ Then it should
 `/tmp/tmp.7dMpfowoGF/NthPrime/NthPrime`.
 * Run that binary with the argument `17` (the first argument in this example); this should generate the output `Prime 17 = 59.`
 
+The final file structure in the example above (as
+displayed by the `tree` program) should be:
+
+```
+$ tree /tmp/tmp.7dMpfowoGF/
+/tmp/tmp.7dMpfowoGF/
+└── NthPrime
+    ├── NthPrime
+    ├── main.c
+    ├── nth_prime.c
+    └── nth_prime.h
+
+1 directory, 4 files
+```
+
 Remember that you can call your script "by hand" as a debugging aid so you can
 see exactly what it's doing and where. So you could do something like
 
@@ -163,9 +168,9 @@ so you don't clutter up `/tmp/` unnecessarily.
 
 The C compiler in the lab is `gcc`.
 
-There are two .c files in this program, both of which will need to be
+There are two `.c` files in this program, both of which will need to be
 compiled and linked. You can do this in a single line (handing gcc both
-.c files) or you can compile them separately and then link them.
+`.c` files) or you can compile them separately and then link them.
 
 You can tell `gcc` what you want the executable called, or you can take
 the default output and rename it.
@@ -174,16 +179,17 @@ Most of you have never compiled a C program before, so this might be a
 good time to ask me to say a little about how that works. Alternately,
 you might see what you can figure out with `man gcc`.
 
-:exclamation: When you run the program you compiled (`NthPrime`) give it
-the second command line argument _your_ script received as its sole command
+:exclamation: When you run the program you compiled (`NthPrime`) you need give `NthPrime` a _single_
+command line argument. The value you should pass it is
+the number _your script_ received as its _second_ command
 line argument.
 
 ### :alert: Some non-obvious assumptions that the test script makes:
 
--   The `.tgz` version of the tar archive will be in the specified directory
-    when you’re done. This means that if you first `gunzip` and then, in a
-    separate step, untar, the test is likely to fail since you’ll end up
-    with a `.tar` file instead of a `.tgz` file.
+The `.tgz` version of the tar archive will be in the specified directory
+when you’re done. This means that if you first `gunzip` and then, in a
+separate step, untar, the test is likely to fail since you’ll end up
+with a `.tar` file instead of a `.tgz` file. _So you should use the appropriate `tar` flags that uncompress and untar in a single step._
 
 ## Second script: Clean up a big directory
 
@@ -198,10 +204,85 @@ Your goal here is to get the tests in `tests.bats` to pass. For this you should 
     do this. The `grep` family of tools is probably the easiest way to
     see if a file has the “DELETE ME!” line. You could then use a shell
     loop to loop through all the files and remove the ones that have the
-    line, or you can use backticks and `rm`.)
--   Create a _new_ compressed `tar` archive that contains the files in the scratch directory _after_ you've removed the "DELETE ME!" files. The files in the archive should _not_ have the path to the scratch directory in their filenames.
+    line, or you can use `rm` with either the `$(…)` syntax or backticks.)
+-   Create a _new_ compressed `tar` archive that contains the files in the scratch directory _after_ you've removed the "DELETE ME!" files. The files in the archive should _not_ have the path to the scratch directory in their filenames. The new tar file should have the name `cleaned_...` where the ellipsis is replaced by the name of the original file, e.g., if your original file is `little_dir.tgz` then the newly created file should be called `cleaned_little_dir.tgz`.
     - This is probably the trickiest part of the lab because you have to be in the scratch directory when you create the `tar` archive or you'll end up with the path to the scratch directory in all the file names.
     - It's easy enough to `cd $SCRATCH` or `pushd $SCRATCH` to get to the scratch directory to run the `tar -zcf...` command, but then how do you know where you came from, so you can put the new tar file in the right place? The `pwd` command returns your current working directory, so something like `here=$(pwd)` will capture your current directory in a shell variable called `here` so you can use `$here` later to refer to where you had been.
+
+If we assume that your scratch directory is, for example,
+`/tmp/tmp.eMvVweqb`, then after the first step
+(uncompressing) the sample tar file `little_dir.tgz`
+you should end up with:
+
+```
+$ tree /tmp/tmp.eMvVweqb/
+/tmp/tmp.eMvVweqb/
+└── little_dir
+    ├── file_0
+    ├── file_1
+    ├── file_10
+    ├── file_11
+    ├── file_12
+    ├── file_13
+    ├── file_14
+    ├── file_15
+    ├── file_16
+    ├── file_17
+    ├── file_18
+    ├── file_19
+    ├── file_2
+    ├── file_3
+    ├── file_4
+    ├── file_5
+    ├── file_6
+    ├── file_7
+    ├── file_8
+    └── file_9
+
+1 directory, 20 files
+```
+
+Then after deleting the appropriate files, you should
+have:
+
+```
+$ tree /tmp/tmp.eMvVweqb/
+/tmp/tmp.eMvVweqb/
+└── little_dir
+    ├── file_1
+    ├── file_10
+    ├── file_11
+    ├── file_12
+    ├── file_15
+    ├── file_16
+    ├── file_17
+    ├── file_18
+    ├── file_19
+    ├── file_2
+    ├── file_3
+    ├── file_4
+    ├── file_5
+    ├── file_6
+    ├── file_8
+    └── file_9
+
+1 directory, 16 files
+```
+
+Finally, after creating the new cleaned tar file
+(`cleaned_little_dir.tgz` in this case) your project
+ directory should look like:
+
+```
+$ tree cleaning/
+cleaning/
+├── big_dir.tgz
+├── cleaned_little_dir.tgz
+├── little_dir.tgz
+└── tests.bats
+
+0 directories, 4 files
+```
 
 # Final Thoughts
 
