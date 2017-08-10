@@ -1,5 +1,7 @@
 #!/usr/bin/env bats
 
+# Tests written by Nic McPhee, August 2016
+
 little=little_dir
 num_little_remaining_files=16
 

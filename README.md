@@ -119,9 +119,12 @@ For this you should write a bash script called `extract_and_compile.sh` that:
     the `gz`, for `gzip`, in the file extension),
     so you’ll need to uncompress and then extract; the `tar` command can
     do both things in one step. You might find the `man` pages
-    for `tar`.
+    for `tar`. This should create a directory `NthPrime` in your scratch
+    directory; that `NthPrime` directory should contain several `*.c` and
+    `*.h` files that can be compiled to create an executable.
+-   Goes into the `NthPrime` directory that the `tar` extraction created.
 -   Compiles the C program that gets extracted, generating an executable
-    called `NthPrime` (still in the specified temporary directory).
+    called `NthPrime` (still in the `NthPrime` directory in your specified temporary directory).
 -   Call the resulting executable (`NthPrime`). `NthPrime` requires a single
     number as a command line argument; you should pass it the first of the two
     command line arguments your script received.
@@ -135,9 +138,9 @@ As an example, imagine your script is called using:
 Then it should
 
 * Extract the contents of `NthPrime.tgz` into
-`/tmp/tmp.7dMpfowoGF`.
-* Compile the files in `/tmp/tmp.7dMpfowoGF` to generate the binary
-`/tmp/tmp.7dMpfowoGF/NthPrime`.
+`/tmp/tmp.7dMpfowoGF` creating a directory `/tmp/tmp.7dMpfowoGF/NthPrime`
+* Compile the files in `/tmp/tmp.7dMpfowoGF/NthPrime` to generate the binary
+`/tmp/tmp.7dMpfowoGF/NthPrime/NthPrime`.
 * Run that binary with the argument `17` (the first argument in this example); this should generate the output `Prime 17 = 59.`
 
 Remember that you can call your script "by hand" as a debugging aid so you can
@@ -198,7 +201,7 @@ Your goal here is to get the tests in `tests.bats` to pass. For this you should 
     line, or you can use backticks and `rm`.)
 -   Create a _new_ compressed `tar` archive that contains the files in the scratch directory _after_ you've removed the "DELETE ME!" files. The files in the archive should _not_ have the path to the scratch directory in their filenames.
     - This is probably the trickiest part of the lab because you have to be in the scratch directory when you create the `tar` archive or you'll end up with the path to the scratch directory in all the file names.
-    - It's easy enough to `cd $SCRATCH` or `pushd $SCRATCH` to get to the scratch directory to run the `tar -zcf...` command, but then how do you know where you came from, so you can put the new tar file in the right place? The `pwd` command returns your current working directory, so something like `here=\`pwd\`` will capture your current directory in a shell variable called `here` so you can use `$here` later to refer to where you had been.
+    - It's easy enough to `cd $SCRATCH` or `pushd $SCRATCH` to get to the scratch directory to run the `tar -zcf...` command, but then how do you know where you came from, so you can put the new tar file in the right place? The `pwd` command returns your current working directory, so something like `here=$(pwd)` will capture your current directory in a shell variable called `here` so you can use `$here` later to refer to where you had been.
 
 # Final Thoughts
 
