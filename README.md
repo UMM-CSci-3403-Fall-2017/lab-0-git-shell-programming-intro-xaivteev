@@ -184,7 +184,7 @@ command line argument. The value you should pass it is
 the number _your script_ received as its _second_ command
 line argument.
 
-### :alert: Some non-obvious assumptions that the test script makes:
+### :warning: Some non-obvious assumptions that the test script makes:
 
 The `.tgz` version of the tar archive will be in the specified directory
 when you’re done. This means that if you first `gunzip` and then, in a
