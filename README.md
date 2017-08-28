@@ -52,7 +52,7 @@ up. So make a bit of an effort, but know when to stop.
 Before you start writing scripts, you’ll need get a copy of this repository
 to work on. This is a two step process:
 
-* First _fork_ the repository on Github
+* First follow the canvas link (which you've alredy done) to create **your copy** of the repository on github classrom.
 * Then _clone_ **your fork** to the machine you're working on
 
 If you're working in pairs or larger groups only _one_ of you needs to fork
